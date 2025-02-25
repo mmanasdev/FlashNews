@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FlashNewsApp: App {
+    
+    @StateObject var coordinator = NewsCoordinator()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            coordinator.start()
         }
     }
 }
