@@ -38,17 +38,27 @@ class NewsListViewModel: ObservableObject {
                 }
                 
                 let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
+                decoder.keyDecodingStrategy = .convertFromSnakeCase // Opcional si el JSON usa snake_case
+                decoder.dateDecodingStrategy = .iso8601 // Intento de parsear fechas en ISO8601
                 
                 let decodedResponse = try decoder.decode(NewsResponse.self, from: data)
+                print("✅ JSON decodificado correctamente")
                 DispatchQueue.main.async {
                     self.articles = decodedResponse.articles
                     self.isLoading = false
                 }
-            } catch {
-                print("❌ Error al obtener noticias: \(error.localizedDescription)")
-                DispatchQueue.main.async { self.isLoading = false }
-            }
+            } catch let DecodingError.dataCorrupted(context) {
+                print("❌ Data corrupta: \(context)")
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("❌ Clave no encontrada: \(key), Contexto: \(context.debugDescription)")
+            } catch let DecodingError.typeMismatch(type, context) {
+                print("❌ Tipo incorrecto: \(type), Contexto: \(context.debugDescription)")
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("❌ Valor no encontrado: \(value), Contexto: \(context.debugDescription)")
+                } catch {
+                    print("❌ Error desconocido: \(error.localizedDescription)")
+                }
+
         }
     }
 }

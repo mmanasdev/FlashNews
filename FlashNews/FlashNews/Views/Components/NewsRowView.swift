@@ -13,7 +13,7 @@ struct NewsRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             
-            AsyncImage(url: URL(string: article.urlToImage )) { image in
+            AsyncImage(url: URL(string: article.urlToImage ?? "" )) { image in
                 image.resizable().scaledToFit()
             } placeholder: {
                 ZStack {

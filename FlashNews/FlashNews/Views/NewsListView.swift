@@ -19,14 +19,18 @@ struct NewsListView: View {
                         ProgressView("Cargando noticias...")
                     } else {
                         List(viewModel.articles, id: \.url) { article in
-                            NewsRowView(article: article)
+                            NavigationLink(destination: ArticleDetailView(article: article)) {
+                                NewsRowView(article: article)
+                            }
                         }
                         .listStyle(.insetGrouped)
                     }
                 }
             .navigationTitle("FlashNews 📰")
             .onAppear {
-                viewModel.fetchNews()
+                if viewModel.articles.isEmpty {
+                    viewModel.fetchNews()
+                }
             }
             
         }
@@ -55,7 +59,7 @@ class NewsListViewModelMock: NewsListViewModel {
                 description: "A major event has unfolded, causing widespread impact across the region.",
                 url: "https://www.cnn.com/2025/02/25/breaking-news-major-event",
                 urlToImage: "https://via.placeholder.com/150",
-                publishedAt: Date(),
+                publishedAt: "Date()",
                 content: "Detailed content about the major event..."
             ),
             Article(
@@ -65,7 +69,7 @@ class NewsListViewModelMock: NewsListViewModel {
                 description: "Innovations in technology are shaping the future in unprecedented ways.",
                 url: "https://www.bbc.com/news/technology-advances-2025",
                 urlToImage: "https://via.placeholder.com/150",
-                publishedAt: Date(),
+                publishedAt: "Date()",
                 content: "In-depth analysis of technological innovations..."
             ),
             Article(
@@ -75,7 +79,7 @@ class NewsListViewModelMock: NewsListViewModel {
                 description: "The latest smartphone release has taken the market by storm.",
                 url: "https://www.theverge.com/2025/02/25/new-smartphone-release",
                 urlToImage: "https://via.placeholder.com/150",
-                publishedAt: Date(),
+                publishedAt: "Date()",
                 content: "Comprehensive review of the new smartphone..."
             )
         ]
