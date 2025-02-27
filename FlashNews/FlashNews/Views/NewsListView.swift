@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct NewsListView: View {
     @ObservedObject var viewModel: NewsListViewModel
 
@@ -47,7 +45,7 @@ struct NewsListView_Previews: PreviewProvider {
     }
 }
 
-// ✅ Mock de `NewsListViewModel` para pruebas y previews
+
 class NewsListViewModelMock: NewsListViewModel {
     override init() {
         super.init()

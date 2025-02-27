@@ -16,10 +16,7 @@ struct NewsRowView: View {
             AsyncImage(url: URL(string: article.urlToImage ?? "" )) { image in
                 image.resizable().scaledToFit()
             } placeholder: {
-                ZStack {
-                    Color.gray.opacity(0.3)
-                    ProgressView()
-                }
+                Color.gray.opacity(0.3)
             }
             .frame(width: 70, height: 70)
             .cornerRadius(8)
